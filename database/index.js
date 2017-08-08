@@ -59,7 +59,7 @@ Object.keys(db).forEach(function(modelName) {
 });
 
 
-sequelize.sync()
+sequelize.sync({force: true})
   .then(()=>console.log("Sucessfully created tables"))
   .catch((error) => console.error(error));
 

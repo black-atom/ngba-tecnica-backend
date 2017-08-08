@@ -6,17 +6,30 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        telefone: DataTypes.STRING,
-        nome: DataTypes.STRING,
-        email: DataTypes.STRING,
-        obervacao: DataTypes.STRING   
+        telefone: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        nome: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        obervacao: {
+            type: DataTypes.STRING(250),
+            allowNull: true,
+        }
     });
 
     Contatos.associate = (models) => {
 
         Contatos.belongsTo(models.clientes, {
             onDelete: "CASCADE",
-            foreignKey: {
+            name: {
+                foreignKey: "funcionario_tipo_id",
                 allowNull: false
             }
         });
