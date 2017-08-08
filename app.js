@@ -46,7 +46,7 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
- const changeEvent = require('./changeEvent');
+const changeEvent = require('./changeEvent');
 changeEvent.on('newClientHasJustConnected',()=>{
   console.log("oi");
 })

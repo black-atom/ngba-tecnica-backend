@@ -13,12 +13,18 @@ const dbConfig =  {
     max: 5,
     min: 0,
     idle: 10000
+  },
+
+  //global definitions for models
+  define: {
+    freezeTableName: true,
+    version: false
   }
 
 };
 
 /* Creates a Connection with the database */
-const sequelize = new Sequelize('atendimento_db', 'redhat', 'redhat', dbConfig);
+const sequelize = new Sequelize('teste_postgres', 'redhat', 'redhat', dbConfig);
 
 /* Test the Connection with the Database */
 sequelize
@@ -51,6 +57,11 @@ Object.keys(db).forEach(function(modelName) {
     db[modelName].associate(db);
   }
 });
+
+
+sequelize.sync({force: true})
+  .then(()=>console.log("Sucessfully created tables"))
+  .catch((error) => console.error(error));
 
 db.sequelize = sequelize;
 

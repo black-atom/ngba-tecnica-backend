@@ -1,3 +1,12 @@
+# Sequelize
+
+## hasMany
+
+## belongsToMany
+
+
+## Exemplos 
+```
 module.exports = (sequelize, DataTypes) => {
   const Project =  sequelize.define("Project", {
     name: DataTypes.STRING,
@@ -17,3 +26,5 @@ module.exports = (sequelize, DataTypes) => {
   }
   return Project;
 }
+
+```
