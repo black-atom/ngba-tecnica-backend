@@ -39,7 +39,12 @@ module.exports = (sequelize, DataTypes) => {
 
     Enderecos.associate = (models) => {
 
-        Enderecos.belongsToMany(models.clientes, { through: models.cliente_enderecos });
+        Enderecos.belongsToMany(models.clientes, {
+            foreignKey:{
+                name: "endereco_id"
+            },
+            through: models.cliente_enderecos 
+        });
 
     }
     

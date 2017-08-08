@@ -32,7 +32,12 @@ module.exports = (sequelize, DataTypes) => {
 
     Clientes.hasMany(models.contatos);
 
-    Clientes.belongsToMany(models.enderecos, { through: models.cliente_enderecos });
+    Clientes.belongsToMany(models.enderecos, { 
+        through: models.cliente_enderecos,
+        foreignKey: {
+            name: "cliente_id"
+        }
+    });
 
   }
   

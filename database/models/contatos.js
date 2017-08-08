@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
 
         Contatos.belongsTo(models.clientes, {
             onDelete: "CASCADE",
-            name: {
-                foreignKey: "funcionario_tipo_id",
+            foreignKey: {
+                name: "cliente_id",
                 allowNull: false
             }
         });
