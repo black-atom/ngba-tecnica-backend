@@ -3,9 +3,12 @@ const Sequelize = require('sequelize');
 const fs        = require("fs");
 const path      = require("path");
 const R         = require("ramda"); 
+const getConfig = require("../config/database");
+
+const dbConfig = getConfig();
 
 /* Database Setup */
-const dbConfig =  {
+const dbDefaultConfig =  {
   host: 'localhost',
   dialect: 'postgres',
 
@@ -23,8 +26,10 @@ const dbConfig =  {
 
 };
 
+const config = Object.assign({}, dbDefaultConfig, dbConfig);
+
 /* Creates a Connection with the database */
-const sequelize = new Sequelize('teste_postgres', 'redhat', 'redhat', dbConfig);
+const sequelize = new Sequelize(config);
 
 /* Test the Connection with the Database */
 sequelize
