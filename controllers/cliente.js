@@ -148,20 +148,41 @@ const deleteClienteEndereco = ( req, res, next) => {
         where: {id}
     })
     .then(nDeleteRows => {
-        if(nDeleteRows == 1){
+
+        if(nDeleteRows >= 1){
             res.send();
         }else{
             throw  Error("No rows found with the given id");
         }
+
     })
     .catch(error => next(error))
 }
 
+const deleteContato = ( req, res, next) => {
+
+    const id = R.prop("contatoID", req.params);
+    
+    database.contatos.destroy({ 
+        where: {id}
+    })
+    .then(nDeleteRows => {
+
+        if(nDeleteRows >= 1){
+            res.send();
+        }else{
+            throw  Error("No rows found with the given id");
+        }
+
+    })
+    .catch(error => next(error))
+}
 
 
 module.exports = {
     getAllClientes,
     createCliente,
     updateCliente,
-    deleteClienteEndereco
+    deleteClienteEndereco,
+    deleteContato
 };

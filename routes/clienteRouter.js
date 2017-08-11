@@ -9,4 +9,8 @@ router.put("/clientes", clienteCtrl.updateCliente );
 /* Cliente Enderedos */
 router.delete("/clientes/:clienteID/enderecos/:addressID", clienteCtrl.deleteClienteEndereco);
 
+
+/* Cliente Contatos */
+router.delete("/clientes/:clienteID/contatos/:contatoID", clienteCtrl.deleteContato);
+
 module.exports = router;
