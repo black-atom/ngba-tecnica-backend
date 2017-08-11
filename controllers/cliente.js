@@ -178,11 +178,20 @@ const deleteContato = ( req, res, next) => {
     .catch(error => next(error))
 }
 
+const getClienteByID = ( req, res, next) => {
+
+    const id = R.prop("clienteID", req.params);
+
+    database.clientes.findById(id, {include: [ database.enderecos, database.contatos ]})
+    .then(clienteModel => res.json(clienteModel))
+    .catch(error => next(error))
+}
 
 module.exports = {
     getAllClientes,
     createCliente,
     updateCliente,
     deleteClienteEndereco,
-    deleteContato
+    deleteContato,
+    getClienteByID
 };
