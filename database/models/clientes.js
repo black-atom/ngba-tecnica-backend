@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Clientes.associate = (models) => {
 
-    Clientes.hasMany(models.contatos);
+    Clientes.hasMany(models.contatos, { foreignKey:"cliente_id" });
 
     Clientes.belongsToMany(models.enderecos, { 
         through: models.cliente_enderecos,

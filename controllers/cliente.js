@@ -38,7 +38,8 @@ const createCliente = ( req, res, next) => {
                  })
             );
 
-        }).map(endereco => {
+        })
+        .map(endereco => {
 
             return endereco.addCliente(cliente_id, {transaction: t});
 
@@ -53,11 +54,21 @@ const createCliente = ( req, res, next) => {
             );
 
         })
+        .then(()=>{
+
+            return database.clientes.findById(cliente_id, {
+                transaction: t,
+                include: [ database.enderecos, database.contatos ]
+            });
+
+        })
     })
-    .then(result => res.status(200).send())
+    .then(clienteCreated => res.status(201).json(clienteCreated))
     .catch(error=> next(error));
 
 }
+
+
 
 
 
