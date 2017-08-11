@@ -140,12 +140,28 @@ const updateCliente = ( req, res, next ) => {
 
 } 
 
+const deleteClienteEndereco = ( req, res, next) => {
 
+    const id = R.prop("addressID", req.params);
+    
+    database.enderecos.destroy({ 
+        where: {id}
+    })
+    .then(nDeleteRows => {
+        if(nDeleteRows == 1){
+            res.send();
+        }else{
+            throw  Error("No rows found with the given id");
+        }
+    })
+    .catch(error => next(error))
+}
 
 
 
 module.exports = {
     getAllClientes,
     createCliente,
-    updateCliente
+    updateCliente,
+    deleteClienteEndereco
 };
