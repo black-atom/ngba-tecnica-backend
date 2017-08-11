@@ -68,11 +68,84 @@ const createCliente = ( req, res, next) => {
 
 }
 
+const updateCliente = ( req, res, next ) => {
+
+    const contatos  = R.prop("contatos", req.body);
+    const enderecos = R.prop("enderecos", req.body);
+    const cliente_id = R.prop('id', req.body);
+
+    database.sequelize.transaction((t) => {
+
+        return database.clientes.findById(cliente_id, {
+            transaction: t
+        })
+        .then( clienteInstance =>{
+            
+            return clienteInstance.update(req.body , {  transaction: t })
+
+        })
+        .then(() => {
+
+            return Promise.all(
+                enderecos.map(endereco => {
+                    return database.enderecos
+                        .findOrCreate({
+                            where: { id: endereco.id },
+                            transaction: t,
+                            defaults: endereco
+                        })
+                        .spread( ( model, created) =>{
+                            return  model.update( enderecos,{
+                                transaction: t
+                            });
+                        })
+                })
+            );
+
+        })
+        .map(endereco => {
+
+            return endereco.addCliente(cliente_id, {transaction: t});
+            
+        })
+        .then(() => {
+
+            return Promise.all(
+                contatos.map(contato => {
+                    contato.cliente_id = cliente_id
+                    return database.contatos.upsert(contato, {
+                        where: { id: contato.id },
+                        transaction: t
+                    })
+                })
+            );
+            
+        })
+        .then(()=>{
+
+            return database.clientes.findById(cliente_id, {
+                transaction: t,
+                include: [ database.enderecos, database.contatos ]
+            });
+
+        })
+
+    })
+    .then(result => {
+
+        res.json(result);
+
+    })
+    .catch(error => next(error))
+
+} 
+
 
 
 
 
 module.exports = {
     getAllClientes,
-    createCliente
+    createCliente,
+    updateCliente
 };

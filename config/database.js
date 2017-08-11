@@ -13,7 +13,8 @@ const config = getConfig({
         host:     "localhost",
         username: "redhat",
         password: "redhat",
-        database: "teste_postgres"
+        database: "teste_postgres",
+        logging: false
     }
 });
 
